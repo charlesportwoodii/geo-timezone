@@ -2,6 +2,7 @@
   "name": "charlesportwoodii/geo-timezone",
   "homepage": "http://minube.com",
   "description": "PHP library for timezone calculation from a particular location and date.",
+  "license": "MIT",
   "repositories": [
     {
       "type": "git",
