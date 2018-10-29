@@ -1,5 +1,5 @@
 {
-  "name": "minube/geo-timezone",
+  "name": "charlesportwoodii/geo-timezone",
   "homepage": "http://minube.com",
   "description": "PHP library for timezone calculation from a particular location and date.",
   "repositories": [
@@ -20,8 +20,10 @@
     "ext-mbstring": ">=7.0",
     "ext-zip": "*",
     "ext-xml":">=7.0",
-    "phpunit/phpunit": "5.7.4",
     "guzzlehttp/guzzle": "6.3.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "6.4.0"
   },
   "autoload": {
     "psr-4": {

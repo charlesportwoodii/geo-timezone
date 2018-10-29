@@ -13,7 +13,7 @@ class Tree extends Element
     protected $dataTree = null;
     protected $dataDirectory;
     protected $utils;
-    
+
     /**
      * Tree constructor.
      * @param $dataDirectory
@@ -24,11 +24,11 @@ class Tree extends Element
             Element::__construct();
             $this->dataDirectory = $dataDirectory;
             $this->utils = new Utils();
-        }else{
+        } else {
             new ErrorException('Invalid data directory: ' . $dataDirectory);
         }
     }
-    
+
     /**
      * Data tree is loaded from json file
      */
@@ -37,7 +37,7 @@ class Tree extends Element
         $jsonData = file_get_contents($this->dataDirectory . self::DATA_TREE_FILENAME);
         $this->dataTree = json_decode($jsonData, true);
     }
-    
+
     /**
      * Load json features data from a particular geo quadrant path
      * @param $quadrantPath
@@ -50,7 +50,7 @@ class Tree extends Element
         $geoJson = json_decode(file_get_contents($filePath), true);
         return $geoJson;
     }
-    
+
     /**
      * Check if a particular location (latitude, longitude)is IN a particular quadrant
      * @param $quadrantPath
@@ -64,7 +64,7 @@ class Tree extends Element
         $timeZone = $this->utils->isPointInQuadrantFeatures($features, $latitude, $longitude);
         return $timeZone;
     }
-    
+
     /**
      * Get valid timezone
      * @param $zoneData
@@ -86,7 +86,7 @@ class Tree extends Element
         }
         return $validTimezone;
     }
-    
+
     /**
      * Check if timezone is valid
      * @param $timeZone
@@ -96,7 +96,7 @@ class Tree extends Element
     {
         return $timeZone != self::NONE_TIMEZONE;
     }
-    
+
     /**
      * Main function for looking the timezone associated to a particular location (latitude, longitude)
      * @param $latitude
@@ -110,7 +110,7 @@ class Tree extends Element
         $timeZone = self::NONE_TIMEZONE;
         $quadrantPath = '';
         $quadrantTree = $this->dataTree['lookup'];
-        
+
         while (!$this->isValidTimeZone($timeZone)) {
             $geoQuadrant->moveToNextQuadrant($latitude, $longitude);
             if (!isset($quadrantTree[$geoQuadrant->getLevel()])) {
@@ -121,11 +121,11 @@ class Tree extends Element
             $timeZone = $this->evaluateQuadrantData($quadrantTree, $quadrantPath, $latitude, $longitude);
             $geoQuadrant->updateMidCoordinates();
         }
-        
+
         if ($timeZone == self::NONE_TIMEZONE || $timeZone == Utils::NOT_FOUND_IN_FEATURES) {
             throw new ErrorException("ERROR: TimeZone not found");
         }
-        
+
         return $timeZone;
     }
 }

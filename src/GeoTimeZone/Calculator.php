@@ -10,7 +10,7 @@ use GeoTimeZone\Quadrant\Tree;
 class Calculator
 {
     protected $quadrantTree;
-    
+
     /**
      * TimeZone constructor.
      * @param $dataDirectory
@@ -25,7 +25,7 @@ class Calculator
             throw new ErrorException('Invalid data tree directory: ' . $dataDirectory);
         }
     }
-    
+
     /**
      * Adjust the latitude value
      * @param $latitude
@@ -43,7 +43,7 @@ class Calculator
         }
         return $newLatitude;
     }
-    
+
     /**
      * Adjust longitude value
      * @param $longitude
@@ -61,7 +61,7 @@ class Calculator
         }
         return $newLongitude;
     }
-    
+
     /**
      * Get timezone name from a particular location (latitude, longitude)
      * @param $latitude
@@ -76,12 +76,12 @@ class Calculator
             $latitude = $this->adjustLatitude($latitude);
             $longitude = $this->adjustLongitude($longitude);
             $timeZone = $this->quadrantTree->lookForTimezone($latitude, $longitude);
-        }catch (ErrorException $error){
+        } catch (ErrorException $error){
             throw $error;
         }
         return $timeZone;
     }
-    
+
     /**
      * Get the local date belonging to a particular latitude, longitude and timestamp
      * @param $latitude
@@ -104,7 +104,7 @@ class Calculator
         }
         return $date;
     }
-    
+
     /**
      * Get timestamp from latitude, longitude and localTimestamp
      * @param $latitude

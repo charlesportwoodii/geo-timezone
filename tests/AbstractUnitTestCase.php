@@ -18,7 +18,7 @@ class AbstractUnitTestCase extends TestCase
         $reflector = new \ReflectionClass($className);
         $method = $reflector->getMethod($methodName);
         $method->setAccessible(true);
-        
+
         return $method;
     }
 }

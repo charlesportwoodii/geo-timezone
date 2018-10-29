@@ -7,7 +7,6 @@ use ErrorException;
 use GuzzleHttp\Client;
 use GeoTimeZone\Quadrant\Indexer;
 
-
 class UpdaterData
 {
     const DOWNLOAD_DIR = "downloads/";
@@ -17,11 +16,11 @@ class UpdaterData
     const REPO_PATH = "/repos/evansiroky/timezone-boundary-builder/releases/latest";
     const GEO_JSON_DEFAULT_URL = "none";
     const GEO_JSON_DEFAULT_NAME = "geojson";
-    
+
     protected $mainDir = null;
     protected $downloadDir = null;
     protected $timezonesSourcePath = null;
-    
+
     /**
      * UpdaterData constructor.
      * @param $dataDirectory
@@ -36,7 +35,7 @@ class UpdaterData
             $this->downloadDir = $dataDirectory . "/" . self::DOWNLOAD_DIR;
         }
     }
-    
+
     /**
      * Get complete json response from repo
      * @param $url
@@ -48,7 +47,7 @@ class UpdaterData
         $response = $client->request('GET', $url);
         return $response->getBody()->getContents();
     }
-    
+
     /**
      * Download zip file
      * @param $url
@@ -58,7 +57,7 @@ class UpdaterData
     {
         exec("wget {$url} --output-document={$destinationPath}");
     }
-    
+
     /**
      * Get timezones json url
      * @param $data
@@ -76,7 +75,7 @@ class UpdaterData
         }
         return $geoJsonUrl;
     }
-    
+
     /**
      * Download last version reference repo
      */
@@ -94,7 +93,7 @@ class UpdaterData
             $this->getZipResponse($geoJsonUrl, $this->downloadDir . self::TIMEZONE_FILE_NAME . ".zip");
         }
     }
-    
+
     /**
      * Unzip data
      * @param $filePath
@@ -117,7 +116,7 @@ class UpdaterData
         }
         return $controlFlag;
     }
-    
+
     /**
      * Rename downloaded timezones json file
      * @return bool
@@ -137,7 +136,7 @@ class UpdaterData
         echo $this->timezonesSourcePath . "\n";
         return rename($jsonPath, $this->timezonesSourcePath);
     }
-    
+
     /**
      * Remove all directories tree in a particular data folder
      * @param $path
@@ -146,7 +145,7 @@ class UpdaterData
     protected function removeData($path, $validDir = null)
     {
         $removeAll = !$validDir ? true : false;
-        
+
         if (is_dir($path)) {
             $objects = scandir($path);
             foreach ($objects as $object) {
@@ -167,7 +166,7 @@ class UpdaterData
         }
         return;
     }
-    
+
     /**
      * Remove data tree
      */
@@ -181,8 +180,8 @@ class UpdaterData
         ];
         $this->removeData($this->mainDir . "/", $validDir);
     }
-    
-    
+
+
     /**
      * Remove downloaded data
      */
@@ -191,7 +190,7 @@ class UpdaterData
         $validDir = array("downloads", "timezones", "dist");
         $this->removeData($this->downloadDir, $validDir);
     }
-    
+
     /**
      * Add folder to zip file
      * @param $mainDir
@@ -215,7 +214,7 @@ class UpdaterData
         }
         closedir($handle);
     }
-    
+
     /**
      * Compress directory
      * @param $sourcePath
@@ -226,14 +225,14 @@ class UpdaterData
         $pathInfo = pathInfo($sourcePath);
         $parentPath = $pathInfo['dirname'];
         $dirName = $pathInfo['basename'];
-        
+
         $z = new ZipArchive();
         $z->open($outZipPath, ZIPARCHIVE::CREATE);
         $z->addEmptyDir($dirName);
         $this->folderToZip($sourcePath, $z, strlen("$parentPath/"));
         $z->close();
     }
-    
+
     /**
      * Main function that runs all updating process
      */

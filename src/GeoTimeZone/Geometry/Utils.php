@@ -14,7 +14,7 @@ class Utils
     const WKT_EXTENSION = "wkt";
     const GEOJSON_EXTENSION = "json";
     const NOT_FOUND_IN_FEATURES = "notFoundInFeatures";
-    
+
     /**
      * Convert array of coordinates to polygon structured json array
      * @param $polygonPoints
@@ -27,7 +27,7 @@ class Utils
             'coordinates' => $this->structurePolygonCoordinates($polygonPoints)
         );
     }
-    
+
     /**
      * Structure polygon coordinates as geoPHP needs
      * @param $polygonPoints
@@ -45,7 +45,7 @@ class Utils
         }
         return $structuredCoordinates;
     }
-    
+
     /**
      * Create polygon geometry object from polygon points array
      * @param $polygonPoints
@@ -56,7 +56,7 @@ class Utils
         $polygonData = $this->createPolygonJsonFromPoints($polygonPoints);
         return $this->createPolygonFromJson(json_encode($polygonData));
     }
-    
+
     /**
      * Create polygon geometry object from structured polygon data (as json)
      * @param $polygonJson
@@ -72,7 +72,7 @@ class Utils
         }
         return $polygon;
     }
-    
+
     /**
      * Adapt quadrant bounds to polygon array format
      * @param $quadrantBounds
@@ -90,7 +90,7 @@ class Utils
             )
         );
     }
-    
+
     /**
      * Create polygon object from quadrant bounds
      * @param $quadrantBounds
@@ -101,7 +101,7 @@ class Utils
         $polygonPoints = $this->adaptQuadrantBoundsToPolygon($quadrantBounds);
         return $this->createPolygonFromPoints($polygonPoints);
     }
-    
+
     /**
      * Structure features data
      * @param $features
@@ -115,7 +115,7 @@ class Utils
         }
         return $structuredFeatures;
     }
-    
+
     /**
      * Structure an isolated feature
      * @param $feature
@@ -133,7 +133,7 @@ class Utils
         );
         return $structuredFeature;
     }
-    
+
     /**
      * Create feature collection array from features list
      * @param $features
@@ -147,7 +147,7 @@ class Utils
         );
         return $featuresCollection;
     }
-    
+
     /**
      * Get intersection data json from two different geometry features
      * @param $geoFeaturesJsonA
@@ -161,7 +161,7 @@ class Utils
         $intersectionData = $polygonA->intersection($polygonB);
         return $intersectionData->out(self::GEOJSON_EXTENSION, true);
     }
-    
+
     /**
      * Check if a particular object point is IN the indicated polygon (source: https://github.com/sookoll/geoPHP.git)
      * and if it is not contained inside, it checks the boundaries
@@ -186,7 +186,7 @@ class Utils
         }
         return $isInside;
     }
-    
+
     /**
      * Check if point is ON the boundaries of the polygon
      * @param $point
@@ -197,7 +197,7 @@ class Utils
     {
         return $polygon->pointOnVertex($point);
     }
-    
+
     /**
      * Check if the polygonA intersects with polygonB
      * @param $polygonJsonA
@@ -212,7 +212,7 @@ class Utils
         $polygonB = $this->getQuadrantPolygon($polygonBoundsB);
         return $polygonA->intersects($polygonB);
     }
-    
+
     /**
      * Check if the polygonA is within polygonB
      * @param $polygonBoundsOrigin
@@ -227,7 +227,7 @@ class Utils
         $polygonOrig = $this->getQuadrantPolygon($polygonBoundsOrigin);
         return $polygonOrig->within($polygonDest);
     }
-    
+
     /**
      * Create a point geometry object from coordinates (latitude, longitude)
      * @param $latitude
@@ -245,7 +245,7 @@ class Utils
         }
         return $point;
     }
-    
+
     /**
      * Check if point (latitude, longitude) is IN a particular features polygon
      * @param $features
@@ -275,7 +275,7 @@ class Utils
         }
         return $timeZone;
     }
-    
+
     /**
      * Check if the point is between two points from the polygon
      * @param $point

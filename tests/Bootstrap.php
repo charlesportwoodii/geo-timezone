@@ -7,4 +7,4 @@ set_include_path(
     __DIR__ . PATH_SEPARATOR . get_include_path()
 );
 
-include __DIR__ . "/../vendor/autoload.php";
+require_once __DIR__ . "/../vendor/autoload.php";
